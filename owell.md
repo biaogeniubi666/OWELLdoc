@@ -1697,7 +1697,8 @@ owell2/resources/views/phpinfo/biaogetest.blade.php
 服务器运行环境是开发和测试产品的基本平台，所有的工作需要在服务器操作系统上运行。
 如果服务器操作系统上的各项配置不一致，就会导致在多人协作的时候出现意外问题。所以要保障每个开发人员的开发和测试环境保持一致。
 
-  
+  ![](.owell_images/8a4983e4.png)
+
 开发者的基本运行环境必须一致，才存在高效分工。
 
 ### 2.本地开发环境部署：
@@ -1713,17 +1714,95 @@ OWELL的开发框架为Laravel，为了统一开发规范，提升开发效率�
 主要分为三种软件管理工具：
 ##### Composer
 
-Composer——PHP的包依赖管理工具
+Composer—— PHP 的包依赖管理工具
 
 ##### PIP
 
-PIP——Python的包依赖管理工具
+PIP——Python 的包依赖管理工具
 
 ##### Yarn
 
-yarn——node.js前端包管理工具
+yarn——node.js 前端包管理工具
 
-### 4.PPython服务端
+### 4.PPython 服务端
 
 
+#### 运行方式
+
+- pip 安装必要的 python 包
+
+numpy  
+request 等等
+
+- 打开 ppython 服务端
+```
+python3 owell2/app/Helpers/Python2/php_python.py
+```
+
+或者可以在生产环境中linux直接打开python脚本作为系统服务
+
+owell2/app/Helpers/Python2/ppython.service
+```
+[Unit]
+Description=PHP-Python Service
+After=network.target remote-fs.target nss-lookup.target
+
+[Service]
+ExecStart=/bin/bash -c "/usr/bin/python3 ~/project/partybuilding/app/Helpers/Python2/php_python.py"
+#ExecReload=
+#ExecStop=
+
+[Install]
+WantedBy=multi-user.target
+```
+
+最后设置系统服务
+
+[*python  脚本设置系统服务*](https://www.jianshu.com/p/7ea6a98f5eb8)
+
+- 注入 php 客户端
+
+
+使用 composer 注入 ppython 服务
+
+owell2/composer.json
+```
+    "autoload": {
+        ...
+        "files":[
+            "app/Helpers/helpers.php",
+            "app/Helpers/Python1/php/php_python1.php",
+            "app/Helpers/Python2/php/php_python2.php"
+        ]
+    },
+```
+运行 `composer dump-autoload` 完成注入服务。
+
+- 运行 ppython 函数
+
+```
+# 查看设备最新信息
+ppython2("get_device_status::go", $device_name);
+
+...
+# 控制灯光
+ppython2("light_controller::go",$device_name, $device_status_now);
+
+...
+# 控制窗帘
+ppython2("curtain_controller::controlling_param", "motor_0", "off");
+
+...
+# 获取设备采集数据
+ppython2("lanju_inside::Lanju_inside");
+
+
+```
+
+
+#### 参考资料
+
+[*参考文档*](https://linux.cn/article-10856-1.html?pr)
+
+[*项目源码*](https://github.com/maiwang79/PPython-again)
 
