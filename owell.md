@@ -5,6 +5,7 @@
 | v1      | 完成整体内容 | 许耿瑞、康源清、栗浩鹏 | 2020年5月20日 |      |
 
 
+
 # 前言
 编写目的：本篇文档的目的在于让读者了解OWELL产品最新的技术架构和业务逻辑。
 
@@ -160,6 +161,7 @@ Route::get('/light_controller/{id}', 'DevicesController@light')->name('light');
 
 #### 控制器方法
 本段先介绍控制器的分类，并归纳总结出控制器的函数功能。
+
 ##### 分类
  现用的控制器方法逻辑分类为：
 - 页面跳转控制器 PagessController
@@ -1705,7 +1707,7 @@ owell2/resources/views/phpinfo/biaogetest.blade.php
 
 OWELL的开发框架为Laravel，为了统一开发规范，提升开发效率，避免莫名其妙的bug，请所有同事都按照这个要求来搭建开发环境。
 
-[*https://learnku.com/docs/laravel-development-environment/6.x/development-environment-windows/5518*](https://lea (https://learnku.com/docs/laravel-development-environment/6.x/development-environment-windows/5518)
+[*laravel开发环境搭建*](https://learnku.com/docs/laravel-development-environment/6.x/development-environment-windows/5518)
 
 
 ### 3.包管理工具
